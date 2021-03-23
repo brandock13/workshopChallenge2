@@ -1,0 +1,585 @@
+{
+	"info": {
+		"_postman_id": "365cadcb-fbfd-4cec-868c-0c8432307425",
+		"name": "Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TASKS",
+			"item": [
+				{
+					"name": "Get active tasks",
+					"item": [
+						{
+							"name": "Get active tasks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"const customerSchema = {",
+											"    \"id\": \"string\"",
+											"}",
+											"",
+											"var customer = JSON.parse(responseBody);",
+											"tests[\"Schema is valid\"] = tv4.validate(customer, customerSchema);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL_Task}}",
+									"host": [
+										"{{baseURL_Task}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create a new task",
+					"item": [
+						{
+							"name": "Create new task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"var content = pm.environment.get(\"taskContent\"); ",
+											"",
+											"pm.test(\"Task Content is correct \", function () {",
+											"    pm.expect(jsonData.content).to.eql(content);",
+											"});",
+											"",
+											"pm.environment.set(\"taskID\", jsonData.id);",
+											"",
+											"",
+											"const customerSchema = {",
+											"    \"id\": \"string\"",
+											"}",
+											"",
+											"var customer = JSON.parse(responseBody);",
+											"tests[\"Schema is valid\"] = tv4.validate(customer, customerSchema);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"content\": \"{{taskContent}}\", \n\t\"due_string\": \"tomorrow at 12:00\", \n\t\"due_lang\": \"en\", \n\t\"priority\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL_Task}}",
+									"host": [
+										"{{baseURL_Task}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get an active task",
+					"item": [
+						{
+							"name": "Get active task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const customerSchema = {",
+											"    \"id\": \"string\"",
+											"}",
+											"",
+											"var customer = JSON.parse(responseBody);",
+											"tests[\"Schema is valid\"] = tv4.validate(customer, customerSchema);",
+											"",
+											"",
+											"var jsonData = pm.response.json();",
+											"var id = pm.environment.get(\"taskID\"); ",
+											"",
+											"pm.test(\"Task ID is correct \", function () {",
+											"    pm.expect(jsonData.id).to.eql(id);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL_Task}}/{{taskID}}",
+									"host": [
+										"{{baseURL_Task}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update a task",
+					"item": [
+						{
+							"name": "Update task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"content\": \"Buy Coffee\"\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL_Task}}/{{taskID}}",
+									"host": [
+										"{{baseURL_Task}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Close a task",
+					"item": [
+						{
+							"name": "Close task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL_Task}}/{{taskID}}/close",
+									"host": [
+										"{{baseURL_Task}}"
+									],
+									"path": [
+										"{{taskID}}",
+										"close"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reopen a task",
+					"item": [
+						{
+							"name": "Reopen task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL_Task}}/{{taskID}}/reopen",
+									"host": [
+										"{{baseURL_Task}}"
+									],
+									"path": [
+										"{{taskID}}",
+										"reopen"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete a task",
+					"item": [
+						{
+							"name": "Delete task",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL_Task}}/{{taskID}}",
+									"host": [
+										"{{baseURL_Task}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 2xx\", function () {",
+							"    pm.response.to.be.success;",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Negative Task",
+			"item": [
+				{
+					"name": "Get active tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.todoist.com/rest/v/tasks",
+							"protocol": "https",
+							"host": [
+								"api",
+								"todoist",
+								"com"
+							],
+							"path": [
+								"rest",
+								"v",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Create new task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"due_string\": \"tomorrow at 12:00\", \n\t\"due_lang\": \"en\", \n\t\"priority\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL_Task}}",
+							"host": [
+								"{{baseURL_Task}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Get active task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL_Task}}/0000001234123",
+							"host": [
+								"{{baseURL_Task}}"
+							],
+							"path": [
+								"0000001234123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Update task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"content\": \"Buy Coffee\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL_Task}}/0001234",
+							"host": [
+								"{{baseURL_Task}}"
+							],
+							"path": [
+								"0001234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Close task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL_Task}}/{{taskID}}/clos",
+							"host": [
+								"{{baseURL_Task}}"
+							],
+							"path": [
+								"{{taskID}}",
+								"clos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reopen task Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL_Task}}/{{taskID}}/reope",
+							"host": [
+								"{{baseURL_Task}}"
+							],
+							"path": [
+								"{{taskID}}",
+								"reope"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Delete task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 4xx\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL_Task}}/0000001234123",
+							"host": [
+								"{{baseURL_Task}}"
+							],
+							"path": [
+								"0000001234123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Response time is less than 500ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(500);",
+					"});"
+				]
+			}
+		}
+	]
+}

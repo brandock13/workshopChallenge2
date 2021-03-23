@@ -1,0 +1,11 @@
+{
+  "name": "challenge2_workshop",
+  "version": "1.0.0",
+  "description": "backend postman",
+  "main": "index.js",
+  "scripts": {
+    "test": "testAPI"
+  },
+  "author": "Brandon Padilla",
+  "license": "ISC"
+}
